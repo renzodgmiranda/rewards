@@ -36,6 +36,15 @@ class ListVouchers extends ListRecords
             ->form([
                 TextInput::make('voucher')->label('Voucher Code')
             ])
+            ->visible(function () {
+                $user = Auth::user();
+
+                if($user->hasAnyRole(['Employee'])) {
+                    return true;
+                }
+
+                return false;
+            })
             ->action(function(array $data){
 
                 $user = Auth::user();

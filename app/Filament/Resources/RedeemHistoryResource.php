@@ -189,7 +189,7 @@ class RedeemHistoryResource extends Resource
             ])
             ->bulkActions([
                BulkActionGroup::make([
-                BulkAction::make('change_status')
+                BulkAction::make('change_unclaimed')
                 ->label('Change Status to Unclaimed')
                 ->deselectRecordsAfterCompletion()
                 ->visible(function () {
@@ -217,7 +217,7 @@ class RedeemHistoryResource extends Resource
                     });
                 }),
 
-                BulkAction::make('change_status')
+                BulkAction::make('change_redeemed')
                 ->label('Change Status to Redeemed')
                 ->icon('heroicon-o-check-circle')
                 ->deselectRecordsAfterCompletion()
