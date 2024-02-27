@@ -171,7 +171,7 @@ class RewardsResource extends Resource
                             'redeemed_image' => $reward->rewards_image,
                             'redeemed_points' => $cost,
                             'redeemed_quantity' => $data['quantity'],
-                            'redeemed_status' => 'Unclaimed',
+                            'redeemed_status' => 'Processing',
                             'redeemed_by' => $user->name,
 
                         ]);

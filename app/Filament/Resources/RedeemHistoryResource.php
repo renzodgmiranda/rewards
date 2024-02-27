@@ -17,6 +17,8 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\BulkAction;
+use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -24,6 +26,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
@@ -82,6 +85,7 @@ class RedeemHistoryResource extends Resource
                 TextColumn::make('redeemed_status')->label('Status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
+                    'Processing' => 'warning',
                     'Redeemed' => 'success',
                     'Unclaimed' => 'danger',
                 }),
@@ -124,6 +128,7 @@ class RedeemHistoryResource extends Resource
                 ->form([
                     Select::make('redeemed_status')->label('Change Status')
                         ->options([
+                            'Processing' => 'Processing',
                             'Redeemed' => 'Redeemed',
                             'Unclaimed' => 'Unclaimed',
                         ])
@@ -157,7 +162,7 @@ class RedeemHistoryResource extends Resource
                     ->requiresConfirmation()
                     ->visible(function(RedeemHistory $status){
 
-                        if($status->redeemed_status === 'Redeemed' || $status->redeemed_status === null){
+                        if($status->redeemed_status === 'Redeemed' || $status->redeemed_status === 'Unclaimed'){
                             return false;
                         }
 
@@ -183,7 +188,71 @@ class RedeemHistoryResource extends Resource
                     }),
             ])
             ->bulkActions([
+               BulkActionGroup::make([
+                BulkAction::make('change_status')
+                ->label('Change Status to Unclaimed')
+                ->deselectRecordsAfterCompletion()
+                ->visible(function () {
+                    $user = Auth::user();
 
+                    if($user->hasAnyRole(['Admin'])) {
+                        return true;
+                    }
+
+                    return false;
+                })
+                ->action(function(Collection $records){
+
+                    $records->each(function($records){
+    
+                        $records->update([
+                            'redeemed_status' => "Unclaimed"
+                        ]);
+                
+                        Notification::make()
+                                ->title(fn (): string => __("Successfully Changed Status to Unclaimed"))
+                                ->success()
+                                ->send();
+                        
+                    });
+                }),
+
+                BulkAction::make('change_status')
+                ->label('Change Status to Redeemed')
+                ->icon('heroicon-o-check-circle')
+                ->deselectRecordsAfterCompletion()
+                ->visible(function () {
+                    $user = Auth::user();
+
+                    if($user->hasAnyRole(['Admin'])) {
+                        return true;
+                    }
+
+                    return false;
+                })
+                ->action(function(Collection $records){
+
+                    $records->each(function($records){
+                        $redeemer = $records->redeemed_by;
+                
+                        $user = User::where('name', '=', $redeemer)->first();
+                
+                        $records->update([
+                            'redeemed_status' => "Redeemed"
+                        ]);
+
+                        $user->update([
+                            'items_redeemed' => $user->items_redeemed + 1
+                        ]);
+                
+                        Notification::make()
+                                ->title(fn (): string => __("Successfully Changed Status to Redeemed"))
+                                ->success()
+                                ->send();
+                        
+                    });
+                }),
+               ])
             ]);
     }
 
