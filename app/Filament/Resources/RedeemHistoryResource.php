@@ -55,6 +55,7 @@ class RedeemHistoryResource extends Resource
     {
         
         return $table
+            ->poll('5s')
             ->modifyQueryUsing(function (Builder $query) {
                 $user = Auth::user();
 

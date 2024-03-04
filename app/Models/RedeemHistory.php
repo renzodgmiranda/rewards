@@ -18,6 +18,7 @@ class RedeemHistory extends Model
         'redeemed_quantity',
         'redeemed_status',
         'redeemed_by',
+        'expiry'
     ];
 
     public function users(): BelongsTo

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('redeemed_quantity')->nullable();
             $table->string('redeemed_status')->nullable();
             $table->string('redeemed_by')->nullable();
+            $table->integer('expiry')->nullable();
             $table->timestamps();
         });
     }

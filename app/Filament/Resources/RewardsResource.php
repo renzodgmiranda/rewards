@@ -4,8 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RewardsResource\Pages;
 use App\Filament\Resources\RewardsResource\RelationManagers;
+use App\Mail\RewardsRedeemed;
 use App\Models\RedeemHistory;
 use App\Models\Rewards;
+use App\Models\User;
 use Filament\Tables\Actions\Action;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -138,14 +140,9 @@ class RewardsResource extends Resource
                 })
                 ->form([
                     TextInput::make('quantity')->label('How many do you want to redeem?')->numeric()->default(1),
-                    Placeholder::make('')
-                        ->content(function (Get $get, Rewards $rewards){
-                            if ($get('quantity') > $rewards->rewards_quantity){
-                                return 'Cannot Redeem more than the available Stock';
-                            }
-                        })
+
                 ])
-                ->action(function(Rewards $reward, RedeemHistory $redeemHistory, array $data){
+                ->action(function(Rewards $reward, RedeemHistory $redeem, array $data){
 
                     $user = Auth::user();
 
@@ -166,13 +163,14 @@ class RewardsResource extends Resource
                             'rewards_quantity' => $value
                         ]);
 
-                        $redeemHistory->create([
+                        $redeem->create([
                             'redeemed_name' => $reward->rewards_name,
                             'redeemed_image' => $reward->rewards_image,
                             'redeemed_points' => $cost,
                             'redeemed_quantity' => $data['quantity'],
                             'redeemed_status' => 'Processing',
                             'redeemed_by' => $user->name,
+                            'expiry' => 1,
 
                         ]);
 

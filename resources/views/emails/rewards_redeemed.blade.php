@@ -24,24 +24,24 @@
 </head>
 <body>
     <h2>A User has redeemed an item</h2>
-    <p>Hello {{ $workorder->users->name }},</p>
-    <p>The User, {{}} has redeemed an Item with the following details</p>
+    <p>Hello Admin,</p>
+    <p>The User, {{ $redeem->redeemed_by }} has redeemed an Item with the following details</p>
     <table>
         <tr>
             <th>Item</th>
-            <td>{{ }}</td>
+            <td>{{ $redeem->redeemed_name }}</td>
         </tr>
         <tr>
             <th>Quantity</th>
-            <td>{{  }}</td>
+            <td>{{ $redeem->redeemed_quantity }}</td>
         </tr>
         <tr>
             <th>Points</th>
-            <td>{{  }}</td>
+            <td>{{ $redeem->redeemed_points }}</td>
         </tr>
         <tr>
             <th>Redeemed at</th>
-            <td>{{  }}</td>
+            <td>{{ $redeem->created_at }}</td>
         </tr>
         <!-- Add other fields as required -->
     </table>

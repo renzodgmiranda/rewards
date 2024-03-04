@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Rewards;
+use App\Models\RedeemHistory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -14,13 +14,13 @@ class RewardsRedeemed extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $rewards;
+    public $redeem;
     /**
      * Create a new message instance.
      */
-    public function __construct(Rewards $rewards)
+    public function __construct(RedeemHistory $redeem)
     {
-        $this->rewards = $rewards;
+        $this->redeem = $redeem;
     }
 
     /**
@@ -39,7 +39,7 @@ class RewardsRedeemed extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.rewards_redeemed',
         );
     }
 
