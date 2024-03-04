@@ -170,7 +170,7 @@ class RewardsResource extends Resource
                             'redeemed_quantity' => $data['quantity'],
                             'redeemed_status' => 'Processing',
                             'redeemed_by' => $user->name,
-                            'expiry' => 1,
+                            'expiry' => 30,
 
                         ]);
 
