@@ -92,9 +92,9 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $user = User::create([
-            'name' => 'Stephen Gustilo',
-            'email' => 'stephen.gustilo@teamspan.com',
-            'password' => bcrypt('admin'),
+            'name' => 'Renzo Miranda',
+            'email' => 'renzo.miranda@teamspan.com',
+            'password' => bcrypt('renzo973'),
             'account' => 'Marketing',
             'points' => 999999,
         ]);
@@ -155,6 +155,6 @@ class DatabaseSeeder extends Seeder
             'voucher_code' => 'TSV0UC43R2000',
             'voucher_points' => 2000,
         ]);
-        
+
     }
 }
