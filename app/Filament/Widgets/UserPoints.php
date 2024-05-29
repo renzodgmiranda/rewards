@@ -9,21 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class UserPoints extends BaseWidget
 {
+    protected int | string | array $columnSpan = 'full';
 
-    public function getPoints(){
-        $user = Auth::user();
+    protected static ?int $sort = 0;
 
-        return $user->points;
-    }
+    protected static bool $isLazy = false;
 
     protected function getStats(): array
     {
-        return [
-            Stat::make('Your Points', auth()->user()->points)
-                ->icon('heroicon-o-sparkles'),
-            Stat::make('Total Points Used', auth()->user()->used_points),
-            Stat::make('Items Redeemed', auth()->user()->items_redeemed),
-        ];
+        $user = Auth::user();
+
+        if($user->hasAnyRole('Employee')){
+            return [
+                Stat::make('Your Points', auth()->user()->points)
+                    ->icon('heroicon-o-sparkles'),
+                Stat::make('Total Points Used', auth()->user()->used_points),
+                Stat::make('Items Redeemed', auth()->user()->items_redeemed),
+            ];
+        }
+        else{
+            return[
+
+            ];
+        }
+        
     }
 
     

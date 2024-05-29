@@ -171,7 +171,6 @@ class RewardsResource extends Resource
                             'redeemed_status' => 'Processing',
                             'redeemed_by' => $user->name,
                             'expiry' => 30,
-
                         ]);
 
                         Notification::make()

@@ -17,7 +17,15 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('account')->nullable();
             $table->bigInteger('points')->default('0');
+            $table->string('tier')->nullable();
             $table->bigInteger('used_points')->default(0);
+            $table->bigInteger('srs_points')->default(0);
+            $table->bigInteger('hw_points')->default(0);
+            $table->bigInteger('tw_points')->default(0);
+            $table->bigInteger('q1_points')->default(0);
+            $table->bigInteger('q2_points')->default(0);
+            $table->bigInteger('q3_points')->default(0);
+            $table->bigInteger('q4_points')->default(0);
             $table->bigInteger('items_redeemed')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

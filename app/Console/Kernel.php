@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('check:undo-expiry')->everyMinute();
+        $schedule->command('app:reset-score-anually')->yearlyOn(12, 31, '23:59');
     }
 
     /**

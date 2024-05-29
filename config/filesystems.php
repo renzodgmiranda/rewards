@@ -42,6 +42,9 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
+            'UploadedFile' => [
+                'maxFilesize' => 51200, // 50MB (50 * 1024 kilobytes)
+            ],
         ],
 
         's3' => [

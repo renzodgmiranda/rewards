@@ -2,12 +2,18 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\ProfileSettings;
 use App\Filament\Pages\Auth\Registration;
+use App\Filament\Resources\AnnouncementResource;
 use App\Filament\Resources\PermissionResource;
 use App\Filament\Resources\RedeemHistoryResource;
 use App\Filament\Resources\RewardsResource;
 use App\Filament\Resources\RoleResource;
 use App\Filament\Resources\UserResource;
+use App\Filament\Widgets\AdminStats;
+use App\Filament\Widgets\PillarsPoints;
+use App\Filament\Widgets\UserMultiWidget;
+use App\Filament\Widgets\UserPoints;
 use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -22,6 +28,7 @@ use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets;
+use Filament\Widgets\AccountWidget;
 use Filament\Widgets\Widget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -32,6 +39,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Shanerbaner82\PanelRoles\PanelRoles;
+use Rupadana\FilamentAnnounce\FilamentAnnouncePlugin;
 
 class HomePanelProvider extends PanelProvider
 {
@@ -46,6 +54,7 @@ class HomePanelProvider extends PanelProvider
             ->brandLogo(asset('images/tslogo.png'))
             ->brandLogoHeight('3rem')
             ->topNavigation()
+            ->profile(ProfileSettings::class, isSimple: false)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -56,7 +65,8 @@ class HomePanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                AccountWidget::class,
+                UserMultiWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -79,11 +89,12 @@ class HomePanelProvider extends PanelProvider
 
                     $msg = "Your Points: " . $user->points . " Pts";
                     return $msg;
-                })
+                }),
             ])
-            ->plugin(PanelRoles::make()
-                ->roleToAssign('Employee')
-                ->restrictedRoles(['Admin', 'Employee']),
+            ->plugin(
+                FilamentAnnouncePlugin::make()
+                    ->pollingInterval('30s') // optional, by default it is set to null
+                    ->defaultColor(Color::Blue) // optional, by default it is set to "primary"
             )
             ->registration(Registration::class);
             

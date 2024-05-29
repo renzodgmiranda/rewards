@@ -55,6 +55,8 @@ class DatabaseSeeder extends Seeder
         $voucherEdit = Permission::create(['name' => 'voucherEdit', 'description' => 'Allow users to edit existing vouchers']);
         $voucherDelete = Permission::create(['name' => 'voucherDelete', 'description' => 'Allow users to delete vouchers']);
 
+        $badgePolicy = Permission::create(['name' => 'badgePolicy', 'description' => 'Allow users to acess all of Badge Resource']);
+
 
 
         $adminRole->givePermissionTo($userView);
@@ -80,6 +82,7 @@ class DatabaseSeeder extends Seeder
         $adminRole->givePermissionTo($voucherCreate);
         $adminRole->givePermissionTo($voucherEdit);
         $adminRole->givePermissionTo($voucherDelete);
+        $adminRole->givePermissionTo($badgePolicy);
 
         $employeeRole->givePermissionTo($rewardsView);
         $employeeRole->givePermissionTo($redeemHistoryView);
@@ -96,6 +99,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'renzo.miranda@teamspan.com',
             'password' => bcrypt('renzo973'),
             'account' => 'Marketing',
+            'tier' => 'N/A',
             'points' => 999999,
         ]);
         $user->assignRole('Admin');
@@ -104,6 +108,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'employee1@teamspan.com',
             'password' => bcrypt('guest'),
             'account' => 'Guest',
+            'tier' => 'Tier 1',
             'points' => 1500,
         ]);
         $user2->assignRole('Employee');
@@ -112,6 +117,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Employee 2',
             'email' => 'employee2@teamspan.com',
             'password' => bcrypt('guest'),
+            'tier' => 'Tier 2',
             'account' => 'Guest',
         ]);
         $user3->assignRole('Employee');
@@ -121,6 +127,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'employee3@teamspan.com',
             'password' => bcrypt('guest'),
             'account' => 'Guest',
+            'tier' => 'Tier 3',
         ]);
         $user4->assignRole('Employee');
 
@@ -131,7 +138,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach($items as $item){
-            $points = $faker->randomElement([500, 1000, 1500, 2000]);
+            $points = $faker->randomElement([50, 100, 150, 200]);
             $quantity = $faker->numberBetween(0, 10);
 
             Rewards::create([
@@ -143,17 +150,17 @@ class DatabaseSeeder extends Seeder
 
         $redeemRecord = RedeemHistory::create([
             'redeemed_name' => 'Notebook and Pen',
-            'redeemed_points' => 750,
+            'redeemed_points' => 75,
         ]);
 
         $voucher1 = Voucher::create([
             'voucher_code' => 'TSV0UC43R3000',
-            'voucher_points' => 3000,
+            'voucher_points' => 300,
         ]);
 
         $voucher2 = Voucher::create([
             'voucher_code' => 'TSV0UC43R2000',
-            'voucher_points' => 2000,
+            'voucher_points' => 200,
         ]);
 
     }

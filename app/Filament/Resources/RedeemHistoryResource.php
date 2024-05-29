@@ -113,6 +113,14 @@ class RedeemHistoryResource extends Resource
  
                     return $indicators;
                 })
+                ->query(function (Builder $query, array $data) {
+                    if (isset($data['from']) && isset($data['until'])) {
+                        $query->whereBetween('audit_date', [
+                            $data['from'],
+                            $data['until'],
+                        ]);
+                    }
+                })
             ])
             ->actions([
                 Action::make('change_status')
