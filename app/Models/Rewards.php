@@ -15,6 +15,7 @@ class Rewards extends Model
         'rewards_image',
         'rewards_points',
         'rewards_quantity',
+        'rewards_tier'
     ];
 
     /**

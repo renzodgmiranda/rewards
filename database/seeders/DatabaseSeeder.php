@@ -99,7 +99,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'renzo.miranda@teamspan.com',
             'password' => bcrypt('renzo973'),
             'account' => 'Marketing',
-            'tier' => 'N/A',
+            'tier' => 6,
             'points' => 999999,
         ]);
         $user->assignRole('Admin');
@@ -108,7 +108,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'employee1@teamspan.com',
             'password' => bcrypt('guest'),
             'account' => 'Guest',
-            'tier' => 'Tier 1',
+            'tier' => 0,
             'points' => 1500,
         ]);
         $user2->assignRole('Employee');
@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Employee 2',
             'email' => 'employee2@teamspan.com',
             'password' => bcrypt('guest'),
-            'tier' => 'Tier 2',
+            'tier' => 1,
             'account' => 'Guest',
         ]);
         $user3->assignRole('Employee');
@@ -127,7 +127,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'employee3@teamspan.com',
             'password' => bcrypt('guest'),
             'account' => 'Guest',
-            'tier' => 'Tier 3',
+            'tier' => 2,
         ]);
         $user4->assignRole('Employee');
 
@@ -139,12 +139,14 @@ class DatabaseSeeder extends Seeder
 
         foreach($items as $item){
             $points = $faker->randomElement([50, 100, 150, 200]);
+            $tier = $faker->randomElement([0, 1, 2]);
             $quantity = $faker->numberBetween(0, 10);
 
             Rewards::create([
                 'rewards_name' => $item,
                 'rewards_points' => $points,
                 'rewards_quantity' => $quantity,
+                'rewards_tier' => $tier
             ]);
         }
 

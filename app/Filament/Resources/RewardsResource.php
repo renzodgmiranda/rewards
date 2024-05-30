@@ -13,6 +13,7 @@ use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -52,6 +53,16 @@ class RewardsResource extends Resource
                             ->numeric(),
                         TextInput::make('rewards_quantity')->label('Quantity')
                             ->numeric(),
+                        Select::make('rewards_tier')->label('Tier Required')
+                        ->options([
+                            0 => 'Level 0',
+                            1 => 'Level 1',
+                            2 => 'Level 2',
+                            3 => 'Level 3',
+                            4 => 'Level 4',
+                            5 => 'Level 5',
+                            6 => 'Level 6',
+                        ])
                     ])
             ]);
     }
@@ -75,6 +86,11 @@ class RewardsResource extends Resource
                     TextColumn::make('rewards_quantity')
                         ->size(TextColumn\TextColumnSize::Medium)
                         ->formatStateUsing(fn (Rewards $record): string => __("In Stock: {$record->rewards_quantity}")),
+                    TextColumn::make('rewards_tier')
+                        ->size(TextColumn\TextColumnSize::Medium)
+                        ->formatStateUsing(fn (Rewards $record): string => __("Tier Required: Level {$record->rewards_tier}"))
+                        ->badge()
+                        ->color('primary'),
                 ]),
             ])
             ->filters([
@@ -107,7 +123,13 @@ class RewardsResource extends Resource
                         return 'heroicon-o-x-circle';
                     }
 
-                    return 'heroicon-o-gift';
+                    elseif($user->tier < $reward->rewards_tier){
+                        return 'heroicon-o-arrow-down-circle';
+                    }
+
+                    else{
+                        return 'heroicon-o-gift';
+                    }
 
                 })
                 ->color(function(Rewards $reward) {
@@ -121,7 +143,13 @@ class RewardsResource extends Resource
                         return 'danger';
                     }
 
-                    return 'success';
+                    elseif($user->tier < $reward->rewards_tier){
+                        return 'danger';
+                    }
+
+                    else{
+                        return 'success';
+                    }
 
                 })
                 ->label(function(Rewards $reward) {
@@ -135,7 +163,13 @@ class RewardsResource extends Resource
                         return 'Insufficient Points';
                     }
 
-                    return 'Redeem';
+                    elseif($user->tier < $reward->rewards_tier){
+                        return 'Tier too low';
+                    }
+
+                    else{
+                        return 'Redeem';
+                    }
 
                 })
                 ->form([
@@ -205,6 +239,10 @@ class RewardsResource extends Resource
                         return true;
                     }
                     elseif($user->points < $reward->rewards_points){
+                        return true;
+                    }
+
+                    elseif($user->tier < $reward->rewards_tier){
                         return true;
                     }
 

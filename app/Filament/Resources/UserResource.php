@@ -52,9 +52,13 @@ class UserResource extends Resource
                     ->dehydrated(fn (?string $state): bool => filled($state)),
                 TextInput::make('account'),
                 Select::make('tier')->options([
-                    'Tier 1' => 'Tier 1',
-                    'Tier 2' => 'Tier 2',
-                    'Tier 3' => 'Tier 3',
+                    0 => 'Level 0',
+                    1 => 'Level 1',
+                    2 => 'Level 2',
+                    3 => 'Level 3',
+                    4 => 'Level 4',
+                    5 => 'Level 5',
+                    6 => 'Level 6',
                 ])
             ]);
     }

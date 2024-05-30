@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('account')->nullable();
             $table->bigInteger('points')->default('0');
-            $table->string('tier')->nullable();
+            $table->integer('tier')->nullable();
             $table->bigInteger('used_points')->default(0);
             $table->bigInteger('srs_points')->default(0);
             $table->bigInteger('hw_points')->default(0);
