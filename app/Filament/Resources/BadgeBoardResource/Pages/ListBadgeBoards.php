@@ -10,4 +10,5 @@ class ListBadgeBoards extends ListRecords
 {
     protected static string $resource = BadgeBoardResource::class;
 
+    protected static ?string $title = 'Badge Board';
 }

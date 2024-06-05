@@ -35,6 +35,7 @@ class VoucherResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->emptyStateHeading("You have not claimed any vouchers yet")
             ->modifyQueryUsing(function (Builder $query) {
                 $user = Auth::user();
 
@@ -48,6 +49,7 @@ class VoucherResource extends Resource
                 TextColumn::make('voucher_code')->label('Voucher Code'),
                 TextColumn::make('voucher_points')->label('Voucher Points'),
                 TextColumn::make('claimed_by')->label('Claimed by')
+                ->badge()
                 ->visible(function () {
                     $user = Auth::user();
 
@@ -58,6 +60,8 @@ class VoucherResource extends Resource
                     return false;
                 }),
                 TextColumn::make('claimed')->label('Claimed')
+                ->badge()
+                ->color(fn (string $state): string => $state === '0' ? __('danger') : __('success'))
                 ->formatStateUsing(fn (string $state): string => $state === '0' ? __('No') : __('Yes'))
                 ->visible(function () {
                     $user = Auth::user();

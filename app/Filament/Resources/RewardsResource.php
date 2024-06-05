@@ -70,6 +70,9 @@ class RewardsResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultGroup('rewards_tier')
+            ->defaultSort('rewards_points', 'asc')
+            ->emptyStateHeading("No merch has been set up yet")
             ->columns([
                 Stack::make([
                     Stack::make([
@@ -82,7 +85,7 @@ class RewardsResource extends Resource
                     ])->grow(false),
                     TextColumn::make('rewards_points')
                         ->size(TextColumn\TextColumnSize::Medium)
-                        ->formatStateUsing(fn (Rewards $record): string => __("Points: {$record->rewards_points}")),
+                        ->formatStateUsing(fn (Rewards $record): string => __("Points: {$record->rewards_points} Pts")),
                     TextColumn::make('rewards_quantity')
                         ->size(TextColumn\TextColumnSize::Medium)
                         ->formatStateUsing(fn (Rewards $record): string => __("In Stock: {$record->rewards_quantity}")),
@@ -204,7 +207,7 @@ class RewardsResource extends Resource
                             'redeemed_quantity' => $data['quantity'],
                             'redeemed_status' => 'Processing',
                             'redeemed_by' => $user->name,
-                            'expiry' => 30,
+                            'expiry' => 1,
                         ]);
 
                         Notification::make()

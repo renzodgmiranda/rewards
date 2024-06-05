@@ -24,9 +24,9 @@ class AvailableRewards extends BaseWidget
     public function table(Table $table): Table
     {
         return $table
+            ->defaultSort('rewards_points', 'asc')
             ->query(RewardsResource::getEloquentQuery()->whereNot('rewards_quantity', 0))
             ->defaultPaginationPageOption(8)
-            ->defaultSort('created_at', 'desc')
             ->columns([
                 Stack::make([
                     Stack::make([

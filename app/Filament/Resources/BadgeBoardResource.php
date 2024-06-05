@@ -25,7 +25,7 @@ class BadgeBoardResource extends Resource
 {
     protected static ?string $model = BadgeBoard::class;
 
-    public static ?string $label = 'Badge Board';
+    protected static ?string $navigationLabel = 'Badge Board';
 
     protected static ?string $navigationGroup = 'Admin';
     

@@ -55,6 +55,8 @@ class RedeemHistoryResource extends Resource
     {
         
         return $table
+            ->defaultSort('created_at', 'desc')
+            ->emptyStateHeading("You have no records of any merch redeems yet")
             ->poll('5s')
             ->modifyQueryUsing(function (Builder $query) {
                 $user = Auth::user();

@@ -90,6 +90,13 @@ class HomePanelProvider extends PanelProvider
                     $msg = "Your Points: " . $user->points . " Pts";
                     return $msg;
                 }),
+                MenuItem::make('Tier')
+                ->label(function(){
+                    $user = Auth::user();
+
+                    $msg = "Your Tier: Level " . $user->tier . "";
+                    return $msg;
+                }),
             ])
             ->plugin(
                 FilamentAnnouncePlugin::make()

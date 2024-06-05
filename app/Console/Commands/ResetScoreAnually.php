@@ -26,9 +26,16 @@ class ResetScoreAnually extends Command
      */
     public function handle()
     {
-        User::where('points', '<>', 0)
-        ->get()
-        ->update([
+        $users = User::with('roles')
+            ->get()
+            ->each(function ($users){
+                $this->resetPointsAnually($users);
+            });
+    }
+
+    protected function resetPointsAnually ($users){
+
+        $users->update([
             'points' => 0,
             'srs_points' => 0,
             'hw_points' => 0,
