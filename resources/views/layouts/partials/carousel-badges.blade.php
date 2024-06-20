@@ -50,6 +50,7 @@
     </button>
 </div>
 
+<!-- Script for Carousel -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.getElementById('default-carousel');
