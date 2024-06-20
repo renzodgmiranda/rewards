@@ -1,4 +1,4 @@
-<div class="mr-80 ml-2 mt-5 pb-40 text-center shadow rounded-lg bg-white">
+<div class="mr-80 ml-2 mt-5 h-60 text-center shadow rounded-lg bg-white">
     <div class="grid grid-cols-2 bg-white">
         <div class="font-sans font-normal text-regular justify-self-start text-white mt-4 ml-9 p-1 bg-orange-950 rounded-lg w-48 h-10 absolute">
             {{$claimedLabel}}
@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-4 w-full ml-9">
+    <div class="grid grid-cols-5 w-full ml-9">
         @foreach($claimedRewards as $rewards)
         <div class="md:col-span-1 col-span-3 size-20">
             <div class="flex text-sm border-2 border-orange-950 rounded-full mt-20">
@@ -21,6 +21,8 @@
 
         </div>
         @endforeach
+
+
     </div>
 
 </div>

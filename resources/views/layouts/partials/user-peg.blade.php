@@ -28,9 +28,9 @@
         @endif
     </div>
 
-    <div class="mx-8 font-sans font-semibold text-regular dark:text-white">
-        <div class="text-black dark:text-gray-300"> {{ Auth::user()->name }} </div>
-        <div>  {{ Auth::user()->account }} </div>
+    <div class="mx-8">
+        <div class="font-sans font-normal text-regular dark:text-white"> {{ Auth::user()->name }} </div>
+        <div class="font-sans font-semibold text-regular dark:text-white">  {{ Auth::user()->account }} </div>
     </div>
 
     <div class="mx-8 mt-1">
