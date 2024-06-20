@@ -47,8 +47,8 @@ class HomePanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('rewards')
-            ->path('rewards')
+            ->id('admin')
+            ->path('admin')
             ->login()
             ->brandName('Rewards')
             ->brandLogo(asset('images/tslogo.png'))
@@ -104,8 +104,8 @@ class HomePanelProvider extends PanelProvider
                     ->defaultColor(Color::Blue) // optional, by default it is set to "primary"
             )
             ->registration(Registration::class);
-            
-    
-            
+
+
+
     }
 }

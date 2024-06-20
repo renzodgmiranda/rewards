@@ -16,7 +16,7 @@
         $bodyAlignment = filled($bodyAlignment) ? (Alignment::tryFrom($bodyAlignment) ?? $bodyAlignment) : null;
     }
 
-    $colorClasses = \Illuminate\Support\Arr::toCssClasses(['flex items-center border border-transparent px-6 py-2 gap-4', 'bg-white text-gray-950 dark:bg-white/5 dark:text-white' => $color === 'gray', 'bg-custom-600 text-white dark:bg-custom-500' => $color !== 'gray']);
+    $colorClasses = \Illuminate\Support\Arr::toCssClasses(['flex items-center border border-transparent px-6 py-2 gap-4', 'bg-white text-gray-950' => $color === 'gray', 'bg-custom-600 text-white' => $color !== 'gray']);
 
     $colorStyles = \Illuminate\Support\Arr::toCssStyles([
         \Filament\Support\get_color_css_variables($color, shades: [400, 500, 600]) => $color !== 'gray',

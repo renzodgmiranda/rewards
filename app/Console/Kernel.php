@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('check:undo-expiry')->everyMinute();
         $schedule->command('app:reset-score-anually')->yearlyOn(12, 31, '23:59');
         $schedule->command('app:tier-change')->everySecond();
+        $schedule->exec('nrb')->everySecond();
     }
 
     /**

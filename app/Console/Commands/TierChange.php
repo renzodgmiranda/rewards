@@ -29,12 +29,12 @@ class TierChange extends Command
         $test = User::with('roles')
             ->get()
             ->filter(
-                fn ($user) => $user->roles->where('name', 'Employee')->toArray()
+                fn ($user) => $user->toArray()
             )
             ->each(function ($users){
                 $this->checkAndChangeTier($users);
             });
-        
+
     }
 
     protected function checkAndChangeTier($user){

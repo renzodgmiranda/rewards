@@ -45,7 +45,7 @@
         </tr>
         <!-- Add other fields as required -->
     </table>
-    <p>Please ready the items redeemed by user as soon as possible</p>
+    <p>Please ready the items redeemed by the user as soon as possible</p>
     <p>For detailed information or any updates, please visit the portal.</p>
 </body>
 </html>
