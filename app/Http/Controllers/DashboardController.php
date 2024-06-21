@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Filament\Resources\UserResource;
 use App\Models\BadgeBoard;
 use App\Models\Badges;
+use App\Models\Post;
 use App\Models\RedeemHistory;
 use App\Models\Rewards;
 use App\Models\User;
@@ -18,9 +19,9 @@ class DashboardController extends Controller
     public function __invoke(Request $request)
     {
         $count = Badges::count();
-
-        $hasBadges = Badgeboard::where('badge_owner', auth()->user()->id)->pluck('badge_name');
-
+        $authId = auth()->user()->id;
+        $hasBadges = Badgeboard::where('badge_owner', $authId)->pluck('badge_name');
+        $badgeCount = Badgeboard::where('badge_owner', $authId)->count();
 
         return view('dashboard', [
             'availableRewards' => Rewards::inRandomOrder()->limit(4)->whereNot('rewards_quantity', 0)->get(),
@@ -29,7 +30,10 @@ class DashboardController extends Controller
             'claimedLabel' => 'Claimed Reward(s):',
             'availableLabel1' => 'Available Reward(s):',
             'availableLabel2' => 'Available Badge(s):',
-            'qr' => UserResource::getUrl('addPts', ['record' => auth()->user()])
+            'qr' => UserResource::getUrl('addPts', ['record' => auth()->user()]),
+            'userBadges' => BadgeBoard::take($badgeCount)->where('badge_owner', auth()->user()->id)->get(),
+            'users' => User::get(),
+            'announcmentPosts' => Post::where('post_users', 'like', '%'. $authId .'%')->orderBy('created_at')->get(),
         ]);
     }
 }

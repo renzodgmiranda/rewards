@@ -24,20 +24,20 @@
 
         <div class="font-sans font-regular justify-self-start text-white text-regular mt-4 ml-10 p-1 pl-2 bg-orange-950 rounded-lg w-40 h-10 absolute">
             @php
-                $badges = "Badge(s):";
+                $badge = "Badge(s):";
             @endphp
-            {{$badges}}
+            {{$badge}}
         </div>
 
         <div class="grid grid-cols-2 w-full ml-9">
-            @foreach($availableRewards as $rewards)
-            <div class="md:col-span-1 col-span-3 size-20">
+            @foreach($userBadges as $badges)
+            <div class="md:col-span-1 col-span-3 size-16 mb-14">
                 <div class="flex text-sm border-2 border-orange-950 rounded-full mt-20">
-                    <img class="rounded-full object-cover" src="storage/{{ $rewards->rewards_image }}" onerror="this.src='images/no-image.jpg';"/>
+                    <img class="rounded-full object-cover" src="storage/{{ $badges->badge_image }}" onerror="this.src='images/no-image.jpg';"/>
                 </div>
 
-                <div class="mt-3 flex font-sans font-normal justify-center">
-                    {{ $rewards->rewards_name}}
+                <div class="mt-3 flex font-sans font-normal justify-center text-xs">
+                    {{ $badges->badge_name}}
                 </div>
             </div>
             @endforeach
