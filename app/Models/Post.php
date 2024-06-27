@@ -15,6 +15,7 @@ class Post extends Model
         'post_body',
         'post_image',
         'post_users',
+        'post_owner_profile',
         'user_id'
     ];
 
@@ -25,5 +26,12 @@ class Post extends Model
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function getReadingTime()
+    {
+        $mins = round(str_word_count($this->post_body) / 250);
+
+        return ($mins < 1) ? 1 : $mins;
     }
 }

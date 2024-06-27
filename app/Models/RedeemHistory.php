@@ -18,13 +18,19 @@ class RedeemHistory extends Model
         'redeemed_quantity',
         'redeemed_status',
         'redeemed_by',
-        'expiry'
+        'expiry',
+        'user_id',
+        'rewards_id',
     ];
 
     public function users(): BelongsTo
     {
         return $this->belongsTo(User::class, 'redeemed_by');
     }
-    
-    
+
+    public function scopeRecentlyclaimed($query, User $user)
+    {
+        $query->where('redeemed_status', 'Redeemed')->where('redeemed_by', $user->name);
+    }
+
 }
