@@ -32,11 +32,10 @@ class EditPost extends EditRecord
     {
 
         $record->update([
-            'post_owner' => $data['post_owner'],
             'post_title' => $data['post_title'],
-            'post_body' => $data['post_image'],
+            'post_body' => $data['post_body'],
+            'post_image' => $data['post_image'],
             'post_users' => $this->checkPostUsers($data['post_users']),
-            'user_id' => auth()->user()->id
         ]);
 
         return $record;

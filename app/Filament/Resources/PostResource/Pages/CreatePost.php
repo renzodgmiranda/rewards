@@ -27,8 +27,10 @@ class CreatePost extends CreateRecord
         return static::getModel()::create([
             'post_owner' => $data['post_owner'],
             'post_title' => $data['post_title'],
-            'post_body' => $data['post_image'],
+            'post_body' => $data['post_body'],
+            'post_image' => $data['post_image'],
             'post_users' => $this->checkPostUsers($data['post_users']),
+            'post_owner_profile' => auth()->user()->profile_photo_path,
             'user_id' => auth()->user()->id
         ]);
     }

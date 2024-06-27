@@ -22,6 +22,7 @@ class DashboardController extends Controller
         $authId = auth()->user()->id;
         $hasBadges = Badgeboard::where('badge_owner', $authId)->pluck('badge_name');
         $badgeCount = Badgeboard::where('badge_owner', $authId)->count();
+        $posts = Post::where('post_users', 'like', '%'. $authId .'%')->latest()->get();
 
         return view('dashboard', [
             'availableRewards' => Rewards::inRandomOrder()->limit(4)->whereNot('rewards_quantity', 0)->get(),
@@ -31,9 +32,8 @@ class DashboardController extends Controller
             'availableLabel1' => 'Available Reward(s):',
             'availableLabel2' => 'Available Badge(s):',
             'qr' => UserResource::getUrl('addPts', ['record' => auth()->user()]),
-            'userBadges' => BadgeBoard::take($badgeCount)->where('badge_owner', auth()->user()->id)->get(),
-            'users' => User::get(),
-            'announcmentPosts' => Post::where('post_users', 'like', '%'. $authId .'%')->orderBy('created_at')->get(),
+            'userBadges' => BadgeBoard::take($badgeCount)->owner(auth()->user())->get(),
+            'announcmentPosts' => $posts,
         ]);
     }
 }

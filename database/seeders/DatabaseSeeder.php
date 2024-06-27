@@ -150,11 +150,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        $redeemRecord = RedeemHistory::create([
-            'redeemed_name' => 'Notebook and Pen',
-            'redeemed_points' => 75,
-        ]);
-
         $voucher1 = Voucher::create([
             'voucher_code' => 'TSV0UC43R3000',
             'voucher_points' => 300,

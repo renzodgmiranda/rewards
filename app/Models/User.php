@@ -44,7 +44,8 @@ class User extends Authenticatable
         'q2_points',
         'q3_points',
         'q4_points',
-        'items_redeemed'
+        'items_redeemed',
+        'bio',
     ];
 
     /**
@@ -93,11 +94,10 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function pointBarPercent()
+    public function pointBarPercent($points)
     {
-        $user = auth()->user();
 
-        $percentage = ($user->points / 1800) * 100;
+        $percentage = ($points / 1800) * 100;
 
         if($percentage > 100){
             return 100;

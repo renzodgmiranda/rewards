@@ -28,12 +28,34 @@
         @endif
     </div>
 
-    <div class="mx-8">
+    <div class="mx-8 mb-2">
         <div class="font-sans font-normal text-regular dark:text-white"> {{ Auth::user()->name }} </div>
         <div class="font-sans font-semibold text-regular dark:text-white">  {{ Auth::user()->account }} </div>
     </div>
 
-    <div class="mx-8 mt-1">
+    <div class="mx-8 mb-5 size-10 font-regular font-sans flex items-center text-sm">
+        @if (Auth::user()->tier >= 6)
+            <img class="rounded-full object-cover mr-3" src="{{URL::asset('/images/Plat.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
+            <span>Platinum</span>
+        @endif
+
+        @if (Auth::user()->tier >= 4 && Auth::user()->tier < 6)
+            <img class="rounded-full object-cover mr-3" src="{{URL::asset('/images/Gold.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
+            <span>Gold</span>
+        @endif
+
+        @if (Auth::user()->tier >= 2 && Auth::user()->tier < 4)
+            <img class="rounded-full object-cover mr-3" src="{{URL::asset('/images/Silver.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
+            <span>Silver</span>
+        @endif
+
+        @if (Auth::user()->tier < 2)
+            <div>Normal Account</div>
+        @endif
+
+    </div>
+
+    <div class="mx-8 mt-1 flex">
         <a class="flex space-x-2 items-center hover:text-yellow-900 text-xs text-yellow-500 underline underline-offset-1"
             href="{{ route('profile.show') }}">
             Manage Profile

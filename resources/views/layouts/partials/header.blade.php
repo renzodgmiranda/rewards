@@ -21,46 +21,6 @@
             @include('layouts.components.searchbar')
         </div>
 
-        <div class="top-menu mr-2 ml-20 hidden lg:block">
-            <ul class="flex space-x-8">
-
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-900 text-sm text-yellow-500"
-                        href="http://10.10.21.250:8000/dashboard">
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        Blog
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        About Us
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        Contact Us
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        Terms
-                    </a>
-                </li>
-            </ul>
-        </div>
         @endauth
     </div>
 

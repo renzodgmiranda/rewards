@@ -201,6 +201,8 @@ class RewardsResource extends Resource
                         ]);
 
                         $redeem->create([
+                            'user_id' => $user->id,
+                            'rewards_id' => $reward->id,
                             'redeemed_name' => $reward->rewards_name,
                             'redeemed_image' => $reward->rewards_image,
                             'redeemed_points' => $cost,
@@ -216,7 +218,7 @@ class RewardsResource extends Resource
                             ->send();
 
                         //Mail::to($vendor->email)->send(new WorkorderAssigned($workorder));
-                    }                   
+                    }
 
                     elseif($user->points < $cost){
                         Notification::make()
@@ -231,8 +233,8 @@ class RewardsResource extends Resource
                         ->danger()
                         ->send();
                     }
-                        
-                    
+
+
 
                 })
                 ->disabled(function (Rewards $reward) {
@@ -254,7 +256,7 @@ class RewardsResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                
+
             ]);
     }
 

@@ -38,6 +38,7 @@ export default {
                 pts45: ['60px', '1px'],
                 pts55: ['73.33px', '1px'],
                 bold: ['33.33px', '1'],
+                semiLarge: ['60px', '1'],
                 large: ['72.5px', '1'],
                 exe: ['34.666666666666664px', '1']
 

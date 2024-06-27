@@ -4,10 +4,21 @@
     </div>
 
     <div class="grid grid-cols-5 w-full ml-9">
+
+        @php
+
+        $counter = 1;
+
+        @endphp
+
         @foreach($availableRewards as $rewards)
         <div class="md:col-span-1 col-span-3 size-20">
             <div class="flex text-sm border-2 border-orange-950 rounded-full mt-20">
-                <img class="rounded-full object-cover" src="storage/{{ $rewards->rewards_image }}" onerror="this.src='images/no-image.jpg';"/>
+                <div id="tooltip-rewards{{$counter}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-extralight text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    {{$rewards->rewards_points}} Pts
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+                <img data-tooltip-target="tooltip-rewards{{$counter}}" class="rounded-full object-cover" src="storage/{{ $rewards->rewards_image }}" onerror="this.src='images/no-image.jpg';"/>
             </div>
 
             <div class="mt-3 flex font-sans font-normal justify-center">
@@ -15,6 +26,11 @@
             </div>
 
         </div>
+
+        @php
+            $counter++ ;
+        @endphp
+
         @endforeach
 
         <div class="h-6 w-6 pt-28">

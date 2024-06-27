@@ -30,6 +30,7 @@
                 <div class="sidebar">
                     @include('layouts.partials.sidebar')
                 </div>
+
                 @endauth
 
                 {{ $slot }}
