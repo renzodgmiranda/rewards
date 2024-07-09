@@ -14,25 +14,16 @@
                 @foreach ([0, 16, 32.7, 49.5, 66, 83, 99] as $percentage)
                     <div id="tooltip-{{$percentage}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-3 text-xs font-extralight text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         @if($percentage == 0)
-                            Tier 0
-                        @endif
-                        @if($percentage == 16)
-                            Tier 1
+                            Bronze
                         @endif
                         @if($percentage == 32.7)
-                            Tier 2
-                        @endif
-                        @if($percentage == 49.5)
-                            Tier 3
+                            Silver
                         @endif
                         @if($percentage == 66)
-                            Tier 4
-                        @endif
-                        @if($percentage == 83)
-                            Tier 5
+                            Gold
                         @endif
                         @if($percentage == 99)
-                            Tier 6
+                            Platinum
                         @endif
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>

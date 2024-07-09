@@ -1,7 +1,9 @@
 <?php
- 
+
 namespace App\Filament\Pages\Auth;
 
+use App\Models\PointHistory;
+use App\Models\User;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -28,6 +30,25 @@ class Registration extends Register
     {
         $return = parent::register();
         Auth::user()->assignRole('Employee');
+        $this->createPointRecords(Auth::user());
         return $return;
+    }
+
+    protected function createPointRecords(User $user)
+    {
+        if(PointHistory::where('user_id', $user->id)->exists())
+        {
+            return ;
+
+        }
+
+        else{
+            return PointHistory::create([
+                'user_id' => $user->id,
+                'log_user' => $user->name,
+                'log_content' => [],
+            ]);
+        }
+
     }
 }

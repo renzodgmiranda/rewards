@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RewardsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,11 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('/', function () {
     return view('home');
 });
-
-Route::get('/user-profile/{profile:id}', [ProfileController::class, 'show'])->name('user-profile.show');
 
 Route::middleware([
     'auth:sanctum',
@@ -27,6 +27,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
-
-
+    Route::get('/user-profile/{profile:id}', [ProfileController::class, 'show'])->name('user-profile.show');
+    Route::get('/search', [ProfileController::class, 'index'])->name('user-profile.index');
+    Route::get('/rewards', [RewardsController::class, 'index'])->name('rewards');
 });

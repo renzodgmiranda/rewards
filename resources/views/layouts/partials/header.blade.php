@@ -1,5 +1,5 @@
-<nav class="fixed top-0 h-16 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-<header class="flex h-16 items-center justify-between py-3 px-6 border-b border-gray-100" >
+<nav class="fixed top-0 h-16 z-50 w-full bg-gray-100 shadow-lg border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<header class="flex h-16 items-center justify-between py-3 px-6 border-gray-100" >
     <div id="header-left" class="flex items-center">
 
         <!-- side bar button for mobile -->

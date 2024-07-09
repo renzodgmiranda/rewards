@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('rewards_image')->nullable();
             $table->bigInteger('rewards_points')->nullable();
             $table->integer('rewards_quantity')->nullable();
-            $table->integer('rewards_tier')->nullable();
+            $table->string('rewards_tier')->nullable();
             $table->timestamps();
         });
     }

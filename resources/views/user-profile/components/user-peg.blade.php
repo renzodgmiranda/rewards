@@ -22,38 +22,38 @@
         @endif
 
 
-        <div class="my-2 grid flex ml-8">
+        <div class="my-2 grid ml-8">
             <div class="font-sans font-normal text-regular dark:text-white"> {{ $userProfile->name }} </div>
             <div class="font-sans font-semibold text-regular dark:text-white">  {{ $userProfile->account }} </div>
         </div>
 
         <div class="relative left-2/4">
             <div class="mb-5 font-regular font-sans flex items-center text-sm">
-                @if ($userProfile->tier >= 6)
+                @if ($userProfile->tier == 4)
                     <img class="rounded-full object-cover size-10 mr-3" src="{{URL::asset('/images/Plat.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
                     <span>Platinum</span>
                 @endif
 
-                @if ($userProfile->tier >= 4 && $userProfile->tier < 6)
+                @if ($userProfile->tier == 3)
                     <img class="rounded-full object-cover size-10 mr-3" src="{{URL::asset('/images/Gold.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
                     <span>Gold</span>
                 @endif
 
-                @if ($userProfile->tier >= 2 && $userProfile->tier < 4)
+                @if ($userProfile->tier == 2)
                     <img class="rounded-full object-cover size-10 mr-3" src="{{URL::asset('/images/Silver.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
                     <span>Silver</span>
                 @endif
 
-                @if ($userProfile->tier < 2)
+                @if ($userProfile->tier == 1)
                     <div class="rounded-full object-cover mr-3 size-6 border-2 border-gray-500 bg-gray-500"></div>
-                    <div>Normal Account</div>
+                    <div>Bronze</div>
                 @endif
 
             </div>
         </div>
     </div>
 
-    <div class="ml-10 mb-10 flex items-center">
+    <div class="ml-10 flex items-center">
         <div class="relative font-sans font-semibold justify-self-start text-base my-4 mx-2 p-1 rounded-lg w-96 h-auto text-neutral-500">
             Bio:<span class="font-sans font-normal y-4">
                 {{$userProfile->bio}}
@@ -63,31 +63,27 @@
         @include("user-profile.components.pointcounter")
     </div>
 
+    <div class="font-sans font-normal justify-self-start text-white text-regular ml-9 p-1 bg-orange-950 rounded-lg w-44 h-10">
+        <div class="ml-2">
+            Running Points:
+        </div>
+    </div>
     <div class="flex w-11/12 ml-10 mt-3 mb-10 bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 relative">
         <div class="flex points-bar bg-blue-600 h-2.5 rounded-full z-50" style="width: {{ $userProfile->pointBarPercent($userProfile->points) }}%">
             <div class="circles-container flex justify-between w-full absolute top-0 left-0">
                 @foreach ([0, 16, 32.7, 49.5, 66, 83, 99] as $percentage)
                     <div id="tooltip-{{$percentage}}" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-3 text-xs font-extralight text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         @if($percentage == 0)
-                            Tier 0
-                        @endif
-                        @if($percentage == 16)
-                            Tier 1
+                            Bronze
                         @endif
                         @if($percentage == 32.7)
-                            Tier 2
-                        @endif
-                        @if($percentage == 49.5)
-                            Tier 3
+                            Silver
                         @endif
                         @if($percentage == 66)
-                            Tier 4
-                        @endif
-                        @if($percentage == 83)
-                            Tier 5
+                            Gold
                         @endif
                         @if($percentage == 99)
-                            Tier 6
+                            Platinum
                         @endif
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>

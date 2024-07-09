@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('account')->nullable();
             $table->bigInteger('points')->default('0');
-            $table->integer('tier')->nullable();
+            $table->string('tier')->nullable();
             $table->bigInteger('used_points')->default(0);
             $table->bigInteger('srs_points')->default(0);
             $table->bigInteger('hw_points')->default(0);
@@ -28,6 +28,7 @@ return new class extends Migration
             $table->bigInteger('q4_points')->default(0);
             $table->bigInteger('items_redeemed')->default(0);
             $table->timestamp('email_verified_at')->nullable();
+            $table->json('wishlist')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();

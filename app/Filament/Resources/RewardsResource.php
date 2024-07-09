@@ -14,6 +14,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -55,13 +56,10 @@ class RewardsResource extends Resource
                             ->numeric(),
                         Select::make('rewards_tier')->label('Tier Required')
                         ->options([
-                            0 => 'Level 0',
-                            1 => 'Level 1',
-                            2 => 'Level 2',
-                            3 => 'Level 3',
-                            4 => 'Level 4',
-                            5 => 'Level 5',
-                            6 => 'Level 6',
+                            'Bronze' => 1,
+                            'Silver' => 2,
+                            'Gold' => 3,
+                            'Platinum' => 4
                         ])
                     ])
             ]);
@@ -91,7 +89,23 @@ class RewardsResource extends Resource
                         ->formatStateUsing(fn (Rewards $record): string => __("In Stock: {$record->rewards_quantity}")),
                     TextColumn::make('rewards_tier')
                         ->size(TextColumn\TextColumnSize::Medium)
-                        ->formatStateUsing(fn (Rewards $record): string => __("Tier Required: Level {$record->rewards_tier}"))
+                        ->formatStateUsing(function (Rewards $record){
+                            if($record->rewards_tier == 1){
+                                return __("Tier Required: Bronze");
+                            }
+                            elseif($record->rewards_tier == 2){
+                                return __("Tier Required: Silver");
+                            }
+                            elseif($record->rewards_tier == 3){
+                                return __("Tier Required: Gold");
+                            }
+                            elseif($record->rewards_tier == 4){
+                                return __("Tier Required: Platinum");
+                            }
+                            else{
+                                return '';
+                            }
+                        })
                         ->badge()
                         ->color('primary'),
                 ]),
@@ -177,65 +191,13 @@ class RewardsResource extends Resource
                 })
                 ->form([
                     TextInput::make('quantity')->label('How many do you want to redeem?')->numeric()->default(1),
+                    Textarea::make('note')->label('Note (this is for redeeming any clothing or items that may vary in size)')
 
                 ])
-                ->action(function(Rewards $reward, RedeemHistory $redeem, array $data){
+                ->action(function($record, $data){
+                    $redeem = $record->redeem($record, $data);
 
-                    $user = Auth::user();
-
-                    $cost = $reward->rewards_points * $data['quantity'];
-                    $totalPts = $user->points;
-
-                    if($user->points >= $cost && $reward->rewards_quantity >= $data['quantity']){
-
-                        $user->update([
-                            'points' => $totalPts - $cost,
-                            'used_points' => $user->used_points + $cost,
-                        ]);
-
-                        $quantity = $reward->rewards_quantity;
-                        $value = $quantity - $data['quantity'];
-
-                        $reward->update([
-                            'rewards_quantity' => $value
-                        ]);
-
-                        $redeem->create([
-                            'user_id' => $user->id,
-                            'rewards_id' => $reward->id,
-                            'redeemed_name' => $reward->rewards_name,
-                            'redeemed_image' => $reward->rewards_image,
-                            'redeemed_points' => $cost,
-                            'redeemed_quantity' => $data['quantity'],
-                            'redeemed_status' => 'Processing',
-                            'redeemed_by' => $user->name,
-                            'expiry' => 1,
-                        ]);
-
-                        Notification::make()
-                            ->title(fn (Rewards $record): string => __("Successfully Redeemed {$record->rewards_name}"))
-                            ->success()
-                            ->send();
-
-                        //Mail::to($vendor->email)->send(new WorkorderAssigned($workorder));
-                    }
-
-                    elseif($user->points < $cost){
-                        Notification::make()
-                        ->title(fn (): string => __("Insuffcient Points"))
-                        ->danger()
-                        ->send();
-                    }
-
-                    elseif($reward->rewards_quantity < $data['quantity']){
-                        Notification::make()
-                        ->title(fn (): string => __("Quantity given is higher than Stock"))
-                        ->danger()
-                        ->send();
-                    }
-
-
-
+                    return $redeem;
                 })
                 ->disabled(function (Rewards $reward) {
                     $user = Auth::user();
@@ -252,6 +214,15 @@ class RewardsResource extends Resource
                     }
 
                     return false;
+                }),
+                Action::make('wishlist')->label('Add to Wishlist')
+                ->visible(function(Rewards $reward){
+                    if($reward->rewards_quantity == 0){
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
                 }),
                 Tables\Actions\EditAction::make(),
             ])

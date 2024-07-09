@@ -13,6 +13,9 @@ use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -141,30 +144,7 @@ class RedeemHistoryResource extends Resource
                             'Unclaimed' => 'Unclaimed',
                         ])
                 ])
-                ->action(function(array $data, RedeemHistory $status){
-
-                    $newStatus = $data['redeemed_status'];
-                    $redeemer = $status->redeemed_by;
-                    $redeemerId = $status->user_id;
-
-                    $user = User::where('name', '=', $redeemer)->where('id', $redeemerId)->first();
-
-                    $status->update([
-                        'redeemed_status' => $newStatus
-                    ]);
-
-                    if($status->redeemed_status === 'Redeemed'){
-                        $user->update([
-                            'items_redeemed' => $user->items_redeemed + 1
-                        ]);
-                    }
-
-                    Notification::make()
-                            ->title(fn (): string => __("Successfully Changed Status to {$newStatus}"))
-                            ->success()
-                            ->send();
-
-                }),
+                ->action(fn(RedeemHistory $record, $data) => $record->changeStatus($data, $record)),
 
                 Action::make('Undo')
                     ->button()
@@ -265,6 +245,30 @@ class RedeemHistoryResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+        ->schema([
+            Section::make('Info')->schema([
+                TextEntry::make('redeemed_name')->label('Item'),
+                TextEntry::make('redeemed_points')->label('Points'),
+                TextEntry::make('redeemed_quantity')->label('Quantity'),
+                TextEntry::make('redeemed_by')->label('Redeemed By'),
+                TextEntry::make('created_at')->label('Redeemed at'),
+                TextEntry::make('redeemed_user_note')->label('Note from the user')
+            ])->columnSpan(1),
+            Section::make('Status')->schema([
+                TextEntry::make('redeemed_status')->label('')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'Processing' => 'warning',
+                    'Redeemed' => 'success',
+                    'Unclaimed' => 'danger',
+                }),
+            ])->columnSpan(1)
+        ]);
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -278,6 +282,7 @@ class RedeemHistoryResource extends Resource
             'index' => Pages\ListRedeemHistories::route('/'),
             'create' => Pages\CreateRedeemHistory::route('/create'),
             'edit' => Pages\EditRedeemHistory::route('/{record}/edit'),
+            'view' => Pages\ViewRedeemHistory::route('/{record}')
         ];
     }
 }

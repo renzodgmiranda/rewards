@@ -7,7 +7,7 @@
 
     <!-- Fixed Top Section -->
     @section('hero')
-    <div class="w-auto mx-80 mt-20 pb-20 text-center shadow rounded-lg bg-white">
+    <div class="w-auto mx-80 mt-20 pb-20 text-center shadow-lg rounded-lg bg-white">
         @include('layouts.partials.tier-milestone-bar')
     </div>
 
@@ -44,7 +44,7 @@
 
                     <div class="mt-2 flex justify-between items-center">
                         <div class="flex py-5 text-base items-center">
-                            <img class="w-10 h-10 rounded-full mr-3" src="storage/{{$item->post_owner_profile}}" onerror="">
+                            <img class="w-10 h-10 rounded-full mr-3" src="{{$item->getProfileUrl()}}" onerror="">
                             <span class="mr-1">{{$item->post_owner}}</span>
                             <span class="text-gray-500 text-sm">| {{$item->getReadingTime()}} min read</span>
                         </div>

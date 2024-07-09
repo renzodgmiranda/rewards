@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UserResource\Pages;
 
 use App\Filament\Resources\UserResource;
+use App\Models\PointHistory;
 use App\Models\User;
 use Closure;
 use Filament\Forms\Components\Actions\Action;
@@ -65,7 +66,7 @@ class AddPoints extends Page implements HasForms
                                     "Feather's Volunteer External Outreach Program" => "10 pts",
                                     "Feather's Volunteer Other activities to be released" => "5/10/15 pts",
                                 ];
-    
+
                                 $HW = [
                                     'Steps Counting Tier 1 (150,000)' => '5 pts',
                                     'Steps Counting Tier 2 (174,000)' => '10 pts',
@@ -73,13 +74,13 @@ class AddPoints extends Page implements HasForms
                                     'Brain Teasers' => '5/10/15 pts',
                                     'Mental Health' => '5/10/15 pts',
                                 ];
-    
+
                                 $TW= [
                                     'Volunteers or other participations' => '5/10/15 pts',
                                     'Kudos from the clients' => '5/10/15 pts',
                                     'Trainning completion (Roots) ' => '5/10/15 pts'
                                 ];
-    
+
                                 return [
                                     KeyValue::make('Social Responsibility & Sustainability')
                                         ->addable(false)
@@ -89,7 +90,7 @@ class AddPoints extends Page implements HasForms
                                         ->editableKeys(false)
                                         ->editableValues(false)
                                         ->default($SRS), // Pass the associative array directly as default values
-    
+
                                     KeyValue::make('Health & Wellness')
                                         ->addable(false)
                                         ->deletable(false)
@@ -98,7 +99,7 @@ class AddPoints extends Page implements HasForms
                                         ->editableKeys(false)
                                         ->editableValues(false)
                                         ->default($HW), // Pass the associative array directly as default values
-    
+
                                     KeyValue::make('Teamwork')
                                         ->addable(false)
                                         ->deletable(false)
@@ -191,7 +192,7 @@ class AddPoints extends Page implements HasForms
             'Brain Teasers - 5 pts' => 5,
             'Brain Teasers - 10 pts' => 10,
             'Brain Teasers - 15 pts' => 15,
-            'Mental Health - 5 pts' => 5,            
+            'Mental Health - 5 pts' => 5,
             'Mental Health - 10 pts' => 10,
             'Mental Health - 15 pt' => 15,
             'Volunteers or other participations - 5 pts' => 5,
@@ -203,7 +204,7 @@ class AddPoints extends Page implements HasForms
             'Trainning completion (Roots) - 5 pts'  => 5,
             'Trainning completion (Roots) - 10 pts' => 10,
             'Trainning completion (Roots) - 15 pts' => 15,
-        ];  
+        ];
 
         $total = 0;
 
@@ -214,7 +215,7 @@ class AddPoints extends Page implements HasForms
 
         for ($i = 0; $count > $i ; $i++){
             $text = $selectedcriteria->get($i);
-            
+
             if (array_key_exists($text, $criteria)) {
                 $total += $criteria[$text];
             }
@@ -232,101 +233,68 @@ class AddPoints extends Page implements HasForms
         $user = $record->where('id', $this->record)->first();
 
         $totalPts = $user->points;
-                    $srsPts = $user->srs_points;
-                    $hwPts = $user->hw_points;
-                    $twPts = $user->tw_points;
-                    $q1Pts = $user->q1_points;
-                    $q2Pts = $user->q2_points;
-                    $q3Pts = $user->q3_points;
-                    $q4Pts = $user->q4_points;
+        $srsPts = $user->srs_points;
+        $hwPts = $user->hw_points;
+        $twPts = $user->tw_points;
+        $q1Pts = $user->q1_points;
+        $q2Pts = $user->q2_points;
+        $q3Pts = $user->q3_points;
+        $q4Pts = $user->q4_points;
 
-                    $criteriaSRS = [
-                        "Feather's Volunteer On-site" => 5,
-                        "Feather's Volunteer Field" => 10,
-                        "Feather's Volunteer Buy-Forward - Tier 1" => 5,
-                        "Feather's Volunteer Buy-Forward - Tier 2" => 10,
-                        "Feather's Volunteer Buy-Forward - Tier 3" => 15,
-                        "Feather's Volunteer External Outreach Program" => 10,
-                        "Feather's Volunteer Other activities to be released - 5 pts" => 5,
-                        "Feather's Volunteer Other activities to be released - 10 pts" => 10,
-                        "Feather's Volunteer Other activities to be released - 15 pts" => 15,
-                    ];
+        $criteriaSRS = $this->criteriaSRS;
+        $criteriaHW = $this->criteriaHW;
+        $criteriaTW = $this->criteriaTW;
 
-                    $criteriaHW = [
-                        'Steps Counting Tier 1 (150,000)' => 5,
-                        'Steps Counting Tier 2 (174,000)' => 10,
-                        'Steps Counting Tier 3 (210,000)' => 15,
-                        'Brain Teasers - 5 pts' => 5,
-                        'Brain Teasers - 10 pts' => 10,
-                        'Brain Teasers - 15 pts' => 15,
-                        'Mental Health - 5 pts' => 5,            
-                        'Mental Health - 10 pts' => 10,
-                        'Mental Health - 15 pt' => 15,
-                    ];
+        $addedPts = $this->added_points;
+        $CC = $this->point_metrics ?? [];
+        $selectedcriteria = collect($CC)->pluck('criteria');
+        $count = $selectedcriteria->count();
 
-                    $criteriaTW = [
-                        'Volunteers or other participations - 5 pts' => 5,
-                        'Volunteers or other participations - 10 pts' => 10,
-                        'Volunteers or other participations - 15 pts' => 15,
-                        'Kudos from the clients - 5 pts' => 5,
-                        'Kudos from the clients - 10 pts' => 10,
-                        'Kudos from the clients - 15 pts' => 15,
-                        'Trainning completion (Roots) - 5 pts'  => 5,
-                        'Trainning completion (Roots) - 10 pts' => 10,
-                        'Trainning completion (Roots) - 15 pts' => 15,
-                    ];
+        $addedSRS = 0;
+        $addedHW = 0;
+        $addedTW = 0;
 
-                    $addedPts = $this->added_points;
-                    $CC = $this->point_metrics ?? [];
-                    $selectedcriteria = collect($CC)->pluck('criteria');
-                    $count = $selectedcriteria->count();
+        Notification::make()
+            ->title('Points has been added to ' . $user->name)
+            ->body($addedPts . ' Pts have been added to a user')
+            ->icon('heroicon-o-check-badge')
+            ->color('success')
+            ->iconColor('success')
+            ->send();
 
-                    $addedSRS = 0;
-                    $addedHW = 0;
-                    $addedTW = 0;
+        for ($i = 0; $count > $i ; $i++){
+            $text = $selectedcriteria->get($i);
 
-                    Notification::make()
-                        ->title('Points has been added to ' . $user->name)
-                        ->body($addedPts . ' Pts have been added to a user')
-                        ->icon('heroicon-o-check-badge')
-                        ->color('success')
-                        ->iconColor('success')
-                        ->send();
-                        
-                    for ($i = 0; $count > $i ; $i++){
-                        $text = $selectedcriteria->get($i);
-                        
-                        if (array_key_exists($text, $criteriaSRS)) {
-                            $addedSRS += $criteriaSRS[$text];
-                        }
-                        elseif (array_key_exists($text, $criteriaHW)) {
-                            $addedHW += $criteriaHW[$text];
-                        }
-                        elseif (array_key_exists($text, $criteriaTW)) {
-                            $addedTW += $criteriaTW[$text];
-                        }
-                        else{
-
-                        }
-                    }
+            if (array_key_exists($text, $criteriaSRS)) {
+                $addedSRS += $criteriaSRS[$text];
+            }
+            elseif (array_key_exists($text, $criteriaHW)) {
+                $addedHW += $criteriaHW[$text];
+            }
+            elseif (array_key_exists($text, $criteriaTW)) {
+                $addedTW += $criteriaTW[$text];
+            }
+            else{
+            }
+        }
 
                     $q1 = 0;
                     $q2 = 0;
                     $q3 = 0;
                     $q4 = 0;
 
-                    $m = date('m');
+                    $m = ceil(date('m') / 3);
 
-                    if($m >= 1 && $m <= 3){
+                    if($m == 1){
                         $q1 += $addedPts;
                     }
-                    if($m >= 4 && $m <= 6){
+                    if($m == 2){
                         $q2 += $addedPts;
                     }
-                    if($m >= 7 && $m <= 9){
+                    if($m == 3){
                         $q3 += $addedPts;
                     }
-                    if($m >= 10 && $m <= 12){
+                    if($m == 4){
                         $q4 += $addedPts;
                     }
 
@@ -342,7 +310,87 @@ class AddPoints extends Page implements HasForms
                     ]);
                     $user->save();
 
-                        
+                    $logData = [];
+                    $currentDate = now()->format('Y-m-d');
+                    $quarter = ceil(date('n') / 3);
+
+                    foreach ($this->point_metrics as $metric) {
+                        $pillar = $metric['pillars'];
+                        $criteria = $metric['criteria'];
+                        $points = $this->getPointsForCriteria($criteria);
+
+                    $logData[] = [
+                        'Pillar' => $pillar,
+                        'Quarter' => "Q$quarter",
+                        'Points' => $points,
+                        'Description' => $criteria,
+                        'Date' => $currentDate,
+                    ];
+                    }
+
+                    $pointLog = PointHistory::firstOrNew([
+                        'user_id' => $user->id,
+                    ]);
+
+                    if ($pointLog->exists) {
+                        // If the log exists, merge the new data with the existing data
+                        $existingLogData = $pointLog->log_content;
+                        $updatedLogData = array_merge($existingLogData, $logData);
+                        $pointLog->log_content = $updatedLogData;
+                    } else {
+                        // If it's a new log, just use the new data
+                        $pointLog->log_content = $logData;
+                    }
+
+                    $pointLog->save();
+
+
     }
+
+    private function getPointsForCriteria($criteria)
+    {
+        $allCriteria = array_merge(
+            $this->criteriaSRS,
+            $this->criteriaHW,
+            $this->criteriaTW
+        );
+
+        return $allCriteria[$criteria] ?? 0;
+    }
+
+    protected $criteriaSRS = [
+        "Feather's Volunteer On-site" => 5,
+        "Feather's Volunteer Field" => 10,
+        "Feather's Volunteer Buy-Forward - Tier 1" => 5,
+        "Feather's Volunteer Buy-Forward - Tier 2" => 10,
+        "Feather's Volunteer Buy-Forward - Tier 3" => 15,
+        "Feather's Volunteer External Outreach Program" => 10,
+        "Feather's Volunteer Other activities to be released - 5 pts" => 5,
+        "Feather's Volunteer Other activities to be released - 10 pts" => 10,
+        "Feather's Volunteer Other activities to be released - 15 pts" => 15,
+    ];
+
+    protected $criteriaHW = [
+        'Steps Counting Tier 1 (150,000)' => 5,
+        'Steps Counting Tier 2 (174,000)' => 10,
+        'Steps Counting Tier 3 (210,000)' => 15,
+        'Brain Teasers - 5 pts' => 5,
+        'Brain Teasers - 10 pts' => 10,
+        'Brain Teasers - 15 pts' => 15,
+        'Mental Health - 5 pts' => 5,
+        'Mental Health - 10 pts' => 10,
+        'Mental Health - 15 pt' => 15,
+    ];
+    protected $criteriaTW = [
+        'Volunteers or other participations - 5 pts' => 5,
+        'Volunteers or other participations - 10 pts' => 10,
+        'Volunteers or other participations - 15 pts' => 15,
+        'Kudos from the clients - 5 pts' => 5,
+        'Kudos from the clients - 10 pts' => 10,
+        'Kudos from the clients - 15 pts' => 15,
+        'Trainning completion (Roots) - 5 pts'  => 5,
+        'Trainning completion (Roots) - 10 pts' => 10,
+        'Trainning completion (Roots) - 15 pts' => 15,
+    ];
 
 }

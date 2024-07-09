@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
@@ -46,6 +47,7 @@ class User extends Authenticatable
         'q4_points',
         'items_redeemed',
         'bio',
+        'wishlist'
     ];
 
     /**
@@ -68,6 +70,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'wishlist' => 'array',
     ];
 
     public function redeem(): HasMany
@@ -84,6 +87,15 @@ class User extends Authenticatable
         return $this->hasMany(BadgeBoard::class, 'name');
     }
 
+    public function pointHistory()
+    {
+        return $this->hasOne(PointHistory::class, 'id');
+    }
+
+    public function wishList()
+    {
+        return $this->hasMany(Rewards::class, 'wishlist');
+    }
 
     /**
      * The accessors to append to the model's array form.
@@ -93,6 +105,13 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function getProfileUrl()
+    {
+        $isUrl = str_contains($this->profile_photo_url, 'http');
+
+        return ($isUrl) ? $this->profile_photo_url : Storage::disk('public')->url($this->profile_photo_url);
+    }
 
     public function pointBarPercent($points)
     {
@@ -108,4 +127,35 @@ class User extends Authenticatable
         }
 
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            if(PointHistory::where('user_id', $user->id)->exists())
+            {
+
+            }
+            else
+            {
+                PointHistory::create([
+                    'user_id' => $user->id,
+                    'log_user' => $user->name,
+                    'log_content' => [],
+                ]);
+
+                Post::create([
+                    'post_owner' => 'Teamspan Rewards',
+                    'post_title' => 'Welcome to Teamspan Rewards ' . $user->name,
+                    'post_body' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus in tempor lacus, sed rhoncus dolor. Mauris ac ante sodales, tincidunt quam id, laoreet tortor. Phasellus vitae nulla ultrices, imperdiet est ut, posuere leo. Nunc eleifend lorem augue, vel viverra risus tempus et. Aenean eget felis massa. Nam ac odio nec.',
+                    'post_users' => $user->id,
+                    'user_id' => 1,
+                ]);
+            }
+
+        });
+
+    }
+
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Post extends Model
 {
@@ -33,5 +34,12 @@ class Post extends Model
         $mins = round(str_word_count($this->post_body) / 250);
 
         return ($mins < 1) ? 1 : $mins;
+    }
+
+    public function getProfileUrl()
+    {
+        $isUrl = str_contains($this->post_owner_profile, 'http');
+
+        return ($isUrl) ? $this->post_owner_profile : Storage::disk('public')->url($this->post_owner_profile);
     }
 }

@@ -1,11 +1,9 @@
-@props(['active'])
+@props(['active', 'navigate'])
 
 @php
-$classes = ($active ?? false)
-            ? 'inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out'
-            : 'inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out';
+    $classes = $active ?? false ? 'flex items-center p-2 text-white bg-orange-950 rounded-lg dark:text-orange-950 hover:bg-orange-300 dark:hover:bg-orange-950 group transition-all' : 'flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-orange-100 dark:hover:bg-orange-200 group transition-all';
 @endphp
 
-<a {{ $attributes->merge(['class' => $classes]) }}>
+<a {{-- $navigate ?? true ? 'wire:navigate' : '' --}} {{ $attributes->merge(['class' => $classes]) }}>
     {{ $slot }}
 </a>

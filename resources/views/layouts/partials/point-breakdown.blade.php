@@ -2,7 +2,7 @@
     <!-- Pillars -->
     <div class="grid grid-cols-4 w-full ml-20">
 
-        <div class="bg-blue_cus1 size-52 rounded-full">
+        <div class="bg-blue_cus1 size-52 rounded-full shadow-lg">
             <div id="tooltip-srs" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-3 text-xs font-extralight text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                 Social Responsibility & Sustainability
                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -15,7 +15,7 @@
             </div>
         </div>
 
-        <div class="bg-blue_cus1 size-52 rounded-full">
+        <div class="bg-blue_cus1 size-52 rounded-full shadow-lg">
             <div id="tooltip-hw" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-extralight text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                 Health & Wellness
                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -28,7 +28,7 @@
             </div>
         </div>
 
-        <div class="bg-blue_cus1 size-52 rounded-full">
+        <div class="bg-blue_cus1 size-52 rounded-full shadow-lg">
             <div id="tooltip-tw" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-xs font-extralight text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                 Teamwork
                 <div class="tooltip-arrow" data-popper-arrow></div>
@@ -44,7 +44,7 @@
 
         <!-- Quarterly -Breakdown -->
         <div class="space-y-6 justify-self-center mr-6">
-            <div class="bg-tier h-10 w-80 rounded-lg p-1">
+            <div class="bg-tier h-10 w-80 rounded-lg p-1 shadow-lg">
                 <div class="flex">
                     <span class="text-regular font-sans font-normal text-white mb-5 ml-5 flex-none"> Q1 </span>
                     <span class="text-bold font-sans font-bold text-white flex-1 content-start mb-7">
@@ -57,7 +57,7 @@
 
             </div>
 
-            <div class="bg-tier h-10 w-80 rounded-lg p-1">
+            <div class="bg-tier h-10 w-80 rounded-lg p-1 shadow-lg">
                 <div class="flex">
                     <span class="text-regular font-sans font-normal text-white mb-5 ml-5 flex-none"> Q2 </span>
                     <span class="text-bold font-sans font-bold text-white flex-1 content-start mb-7">
@@ -70,7 +70,7 @@
 
             </div>
 
-            <div class="bg-tier h-10 w-80 rounded-lg p-1">
+            <div class="bg-tier h-10 w-80 rounded-lg p-1 shadow-lg">
                 <div class="flex">
                     <span class="text-regular font-sans font-normal text-white mb-5 ml-5 flex-none"> Q3 </span>
                     <span class="text-bold font-sans font-bold text-white flex-1 content-start mb-7">
@@ -83,7 +83,7 @@
 
             </div>
 
-            <div class="bg-tier h-10 w-80 rounded-lg p-1">
+            <div class="bg-tier h-10 w-80 rounded-lg p-1 shadow-lg">
                 <div class="flex">
                     <span class="text-regular font-sans font-normal text-white mb-5 ml-5 flex-none"> Q4 </span>
                     <span class="text-bold font-sans font-bold text-white flex-1 content-start mb-7">

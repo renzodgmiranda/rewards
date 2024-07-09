@@ -26,6 +26,12 @@ export default {
                 mainbg: '#faf1ef',
                 blue_cus1: '#4c6784',
                 gray_cus1: '#93a3b5',
+                gold: '#FFD700',
+                silver: '#C0C0C0',
+                bronze: '#CD7F32',
+                platinum: '#e5e4e2',
+                yellow_cus1: '#f9a61c',
+                orange_cus1: '#ef4d25'
             },
 
             fontFamily: {
@@ -34,10 +40,13 @@ export default {
 
             fontSize: {
                 regular: '1.3331rem',
+                pts20: '1.67rem',
                 pts30: '2.5rem',
+                pts30woRem: ['40px', '1px'],
                 pts45: ['60px', '1px'],
                 pts55: ['73.33px', '1px'],
                 bold: ['33.33px', '1'],
+                pts25: ['33.33px', '1px'],
                 semiLarge: ['60px', '1'],
                 large: ['72.5px', '1'],
                 exe: ['34.666666666666664px', '1']

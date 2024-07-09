@@ -30,7 +30,7 @@
 
         <x-slot name="content">
             <!-- Account Management -->
-            <!-- <div class="block px-4 py-2 text-xs text-gray-400">
+            <div class="block px-4 py-2 text-xs text-gray-400">
                 Manage Account
             </div>
 
@@ -38,13 +38,8 @@
                 Profile Setings
             </x-dropdown-link>
 
-            <div class="border-t border-gray-200"></div> -->
-            <!-- Authentication -->
-            <x-dropdown-link wire:navigate href="{{ route('user-profile.show', auth()->user())}}">
-                Profile Page
-            </x-dropdown-link>
-
             <div class="border-t border-gray-200"></div>
+            <!-- Authentication -->
 
             <form method="POST" action="{{ route('logout') }}" x-data>
                 @csrf

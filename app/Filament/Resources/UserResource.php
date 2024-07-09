@@ -63,6 +63,23 @@ class UserResource extends Resource
                 TextColumn::make('account'),
                 TextColumn::make('points'),
                 TextColumn::make('tier')
+                ->formatStateUsing(function (User $record){
+                    if($record->tier == 1){
+                        return __("Bronze");
+                    }
+                    elseif($record->tier == 2){
+                        return __("Silver");
+                    }
+                    elseif($record->tier == 3){
+                        return __("Gold");
+                    }
+                    elseif($record->tier == 4){
+                        return __("Platinum");
+                    }
+                    else{
+                        return '';
+                    }
+                })
             ])
             ->filters([
                 //

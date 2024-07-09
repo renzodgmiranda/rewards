@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Filament\Resources\UserResource;
 use App\Models\BadgeBoard;
 use App\Models\Badges;
+use App\Models\PointHistory;
 use App\Models\Post;
 use App\Models\RedeemHistory;
 use App\Models\Rewards;
@@ -15,8 +16,10 @@ class ProfileController extends Controller
 {
     public function index()
     {
-
-        return view('userprofile.index');
+        return view('user-profile.index',
+        [
+            'userList' => User::take(5)->get(),
+        ]);
     }
 
     public function show(User $profile)
@@ -35,11 +38,13 @@ class ProfileController extends Controller
             'user-profile.show',
             [
                 'userProfile' => $profile,
-                'claimedRewards' => RedeemHistory::take(4)->recentlyclaimed($profile)->get(),
+                'claimedRewards' => RedeemHistory::take(5)->recentlyclaimed($profile)->latest()->get(),
                 'qr' => UserResource::getUrl('addPts', ['record' => $profile]),
                 'userBadges' => BadgeBoard::take(11)->owner($profile)->get(),
                 'extraBadges' => $extraBadges,
+                'pointLog' => $pointLog = PointHistory::findOrFail($profile->id)
             ]
         );
     }
+
 }
