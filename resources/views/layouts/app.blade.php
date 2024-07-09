@@ -30,6 +30,7 @@
                 <div class="sidebar">
                     @include('layouts.partials.sidebar')
                 </div>
+
                 @endauth
 
                 {{ $slot }}
@@ -40,6 +41,8 @@
         @stack('modals')
 
         @livewireScripts
+        @livewire('wire-elements-modal')
         <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+        <script src="./node_modules/flowbite/dist/flowbite.js"></script>
     </body>
 </html>

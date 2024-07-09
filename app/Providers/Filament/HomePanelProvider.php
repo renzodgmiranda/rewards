@@ -50,6 +50,7 @@ class HomePanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->passwordReset()
             ->brandName('Rewards')
             ->brandLogo(asset('images/tslogo.png'))
             ->brandLogoHeight('3rem')
@@ -94,9 +95,24 @@ class HomePanelProvider extends PanelProvider
                 ->label(function(){
                     $user = Auth::user();
 
-                    $msg = "Your Tier: Level " . $user->tier . "";
-                    return $msg;
+                    if($user->tier == 1){
+                        return "Your Tier: Bronze";
+                    }
+                    elseif($user->tier == 2){
+                        return "Your Tier: Silver";
+                    }
+                    elseif($user->tier == 3){
+                        return "Your Tier: Gold";
+                    }
+                    elseif($user->tier == 4){
+                        return "Your Tier: Platinum";
+                    }
+                    else{
+                        return '';
+                    }
+
                 }),
+                MenuItem::make('Redirect')->url(fn (): string => route('dashboard'))->label('Go Back to Merch Shop'),
             ])
             ->plugin(
                 FilamentAnnouncePlugin::make()

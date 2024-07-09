@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Rewards;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +15,16 @@ return new class extends Migration
     {
         Schema::create('redeem_histories', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(User::class);
+            $table->foreignIdFor(Rewards::class);
+
             $table->string('redeemed_name')->nullable();
             $table->string('redeemed_image')->nullable();
             $table->bigInteger('redeemed_points')->nullable();
             $table->integer('redeemed_quantity')->nullable();
             $table->string('redeemed_status')->nullable();
             $table->string('redeemed_by')->nullable();
+            $table->mediumText('redeemed_user_note')->nullable();
             $table->integer('expiry')->nullable();
             $table->timestamps();
         });

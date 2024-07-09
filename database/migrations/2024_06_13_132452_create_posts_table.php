@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('post_image')->nullable();
             $table->longText('post_body')->nullable();
             $table->text('post_users')->nullable();
+            $table->string('post_owner_profile', 2048)->nullable();
 
             $table->timestamps();
         });

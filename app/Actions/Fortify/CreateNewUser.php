@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\PointHistory;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
@@ -33,8 +34,11 @@ class CreateNewUser implements CreatesNewUsers
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'password' => Hash::make($input['password']),
-            ]), function (User $user) {
+            ])->assignRole('Employee'), function (User $user) {
                 $this->createTeam($user);
+                $this->createPointRecords($user);
+
+
             });
         });
     }
@@ -49,5 +53,22 @@ class CreateNewUser implements CreatesNewUsers
             'name' => explode(' ', $user->name, 2)[0]."'s Team",
             'personal_team' => true,
         ]));
+    }
+
+    protected function createPointRecords(User $user)
+    {
+        if(PointHistory::where('user_id', $user->id)->exists())
+        {
+            return ;
+        }
+
+        else{
+            return PointHistory::create([
+                'user_id' => $user->id,
+                'log_user' => $user->name,
+                'log_content' => json_encode([]),
+            ]);
+        }
+
     }
 }

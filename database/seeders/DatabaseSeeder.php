@@ -139,7 +139,7 @@ class DatabaseSeeder extends Seeder
 
         foreach($items as $item){
             $points = $faker->randomElement([50, 100, 150, 200]);
-            $tier = $faker->randomElement([0, 1, 2]);
+            $tier = $faker->randomElement([1, 2, 3, 4]);
             $quantity = $faker->numberBetween(0, 10);
 
             Rewards::create([
@@ -149,11 +149,6 @@ class DatabaseSeeder extends Seeder
                 'rewards_tier' => $tier
             ]);
         }
-
-        $redeemRecord = RedeemHistory::create([
-            'redeemed_name' => 'Notebook and Pen',
-            'redeemed_points' => 75,
-        ]);
 
         $voucher1 = Voucher::create([
             'voucher_code' => 'TSV0UC43R3000',

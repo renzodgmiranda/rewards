@@ -1,5 +1,5 @@
-<nav class="fixed top-0 h-16 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-<header class="flex h-16 items-center justify-between py-3 px-6 border-b border-gray-100" >
+<nav class="fixed top-0 h-16 z-50 w-full bg-gray-100 shadow-lg border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+<header class="flex h-16 items-center justify-between py-3 px-6 border-gray-100" >
     <div id="header-left" class="flex items-center">
 
         <!-- side bar button for mobile -->
@@ -21,46 +21,6 @@
             @include('layouts.components.searchbar')
         </div>
 
-        <div class="top-menu mr-2 ml-20 hidden lg:block">
-            <ul class="flex space-x-8">
-
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-900 text-sm text-yellow-500"
-                        href="http://10.10.21.250:8000/dashboard">
-                        Home
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        Blog
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        About Us
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        Contact Us
-                    </a>
-                </li>
-
-                <li>
-                    <a class="flex space-x-2 items-center hover:text-yellow-500 text-sm text-gray-500"
-                        href="http://10.10.21.250:8000/blog">
-                        Terms
-                    </a>
-                </li>
-            </ul>
-        </div>
         @endauth
     </div>
 
