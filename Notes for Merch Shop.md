@@ -25,3 +25,20 @@ Will revisit this issue so we can still have the wire:navigate attribute as SPA 
 
 I used <x-nav-link> for all the nav links that should be under the views/components/nav-link.blade.php
 I commented out the wire:navigate feature for now
+
+Recommended ways to code some of the pages in Merch Shop
+
+For anything just showing data, Just use a Controller
+Anything with input or actions, code it using livewire
+
+Some of the pages that I leave behind undone or unfinished
+
+Controller: 
+My Badges(link button to it is in the profile page and shows up only when badges section are filled)
+Point History
+All Available Badges 
+
+Livewire:
+Redeem History 
+Redeem Voucher
+Inbox

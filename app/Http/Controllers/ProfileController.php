@@ -34,6 +34,25 @@ class ProfileController extends Controller
             $extraBadges = 0;
         }
 
+        $size = [
+            'size' => '250',
+            'type' => 'svg',
+            'margin' => '1',
+            'color' => 'rgba(74, 74, 74, 1)',
+            'back_color' => 'rgba(252, 252, 252, 1)',
+            'style' => 'square',
+            'hasGradient' => false,
+            'gradient_form' => 'rgb(69, 179, 157)',
+            'gradient_to' => 'rgb(241, 148, 138)',
+            'gradient_type' => 'vertical',
+            'hasEyeColor' => false,
+            'eye_color_inner' => 'rgb(241, 148, 138)',
+            'eye_color_outer' => 'rgb(69, 179, 157)',
+            'eye_style' => 'square',
+        ];
+
+        $wishlist = json_decode($profile->wishlist, true) ?: [];
+
         return view(
             'user-profile.show',
             [
@@ -42,7 +61,9 @@ class ProfileController extends Controller
                 'qr' => UserResource::getUrl('addPts', ['record' => $profile]),
                 'userBadges' => BadgeBoard::take(11)->owner($profile)->get(),
                 'extraBadges' => $extraBadges,
-                'pointLog' => $pointLog = PointHistory::findOrFail($profile->id)
+                'pointLog' => $pointLog = PointHistory::findOrFail($profile->id),
+                'size' => $size,
+                'wishlist' => Rewards::whereIn('id', $wishlist)->get()
             ]
         );
     }

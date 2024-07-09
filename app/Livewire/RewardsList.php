@@ -31,7 +31,7 @@ class RewardsList extends Component
 
     public function isBronze()
     {
-        if($this->sort === 'Bronze'){
+        if($this->sort == 1){
             return true;
         }
         else{
@@ -41,7 +41,7 @@ class RewardsList extends Component
 
     public function isSilver()
     {
-        if($this->sort === 'Silver'){
+        if($this->sort == 2){
             return true;
         }
         else{
@@ -51,7 +51,7 @@ class RewardsList extends Component
 
     public function isGold()
     {
-        if($this->sort === 'Gold'){
+        if($this->sort == 3){
             return true;
         }
         else{
@@ -62,7 +62,7 @@ class RewardsList extends Component
 
     public function isPlatinum()
     {
-        if($this->sort === 'Platinum'){
+        if($this->sort == 4){
             return true;
         }
         else{

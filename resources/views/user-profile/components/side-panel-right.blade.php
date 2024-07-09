@@ -5,37 +5,22 @@
             Scan Here to Add Points for {{$userProfile->name}}
         </div>
 
-        @php
-            $size = [
-                'size' => '250',
-                'type' => 'svg',
-                'margin' => '1',
-                'color' => 'rgba(74, 74, 74, 1)',
-                'back_color' => 'rgba(252, 252, 252, 1)',
-                'style' => 'square',
-                'hasGradient' => false,
-                'gradient_form' => 'rgb(69, 179, 157)',
-                'gradient_to' => 'rgb(241, 148, 138)',
-                'gradient_type' => 'vertical',
-                'hasEyeColor' => false,
-                'eye_color_inner' => 'rgb(241, 148, 138)',
-                'eye_color_outer' => 'rgb(69, 179, 157)',
-                'eye_style' => 'square',
-            ];
-        @endphp
-
         <div class="m-2">
             {{\LaraZeus\Qr\Facades\Qr::render(data: $qr, downloadable: false, options: $size)}}
         </div>
     </div>
 
     <!-- Wish List -->
-    <div class="bg-white mt-12 mb-12 rounded-lg pb-3 shadow-lg">
-        <div class="top-0 justify-center bg-orange-950 flex mt-8 mx-8 font-sans font-regular text-regular text-white rounded-lg">
+    <div class="bg-white mt-12 mb-12 rounded-lg py-2 shadow-lg h-auto">
+        <div class="bg-orange-950 flex mx-8 font-sans font-regular text-regular text-white rounded-lg p-2">
             {{$userProfile->name}}'s Wish List
         </div>
-        <div class="m-2">
-
+        <div class="m-2 rounded-lg border-gray-300 border">
+            @foreach ($wishlist as $item)
+            <div class="w-full p-1 border-b border-gray-300 p-2 text-regular font-semibold font-sans">
+                {{$item->rewards_name}}
+            </div>
+            @endforeach
         </div>
     </div>
 
