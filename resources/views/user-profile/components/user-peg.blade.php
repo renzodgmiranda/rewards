@@ -45,7 +45,7 @@
                 @endif
 
                 @if ($userProfile->tier == 1)
-                    <div class="rounded-full object-cover mr-3 size-6 border-2 border-gray-500 bg-gray-500"></div>
+                    <img class="rounded-full object-cover size-10 mr-3" src="{{URL::asset('/images/Bronze.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
                     <div>Bronze</div>
                 @endif
 
