@@ -48,6 +48,7 @@
             <span>Silver</span>
         @endif
         @if (Auth::user()->tier == 1)
+            <img class="rounded-full object-cover mr-3" src="{{URL::asset('/images/Bronze.jpg')}}" onerror="this.src='{{URL::asset('/images/no-image.jpg')}}';"/>
             <div>Bronze</div>
         @endif
     </div>
