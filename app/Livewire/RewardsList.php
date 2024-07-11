@@ -70,6 +70,7 @@ class RewardsList extends Component
         }
     }
 
+    //query list of rewards depednding on the sort buttons and search function
     #[Computed()]
     public function rewardsList()
     {

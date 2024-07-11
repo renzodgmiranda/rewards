@@ -223,6 +223,9 @@ class RewardsResource extends Resource
                     else{
                         return false;
                     }
+                })
+                ->action(function($record){
+                    return $record->addToWishlist($record);
                 }),
                 Tables\Actions\EditAction::make(),
             ])

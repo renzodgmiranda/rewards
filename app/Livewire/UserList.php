@@ -22,6 +22,7 @@ class UserList extends Component
         $this->search = $search;
     }
 
+    //query list of users depednding on the search function
     #[Computed()]
     public function userList()
     {

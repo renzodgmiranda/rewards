@@ -36,6 +36,7 @@ class Registration extends Register
 
     protected function createPointRecords(User $user)
     {
+        //failsafe function when model doesnt automatically make one
         if(PointHistory::where('user_id', $user->id)->exists())
         {
             return ;

@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
+    //listing all records
     public function index()
     {
         return view('user-profile.index',
@@ -22,6 +23,7 @@ class ProfileController extends Controller
         ]);
     }
 
+    //showing specific profile pages
     public function show(User $profile)
     {
         $badgeCount = Badgeboard::where('badge_owner', $profile->id)->count();

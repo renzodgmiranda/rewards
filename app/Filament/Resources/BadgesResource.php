@@ -92,7 +92,7 @@ class BadgesResource extends Resource
                         ])
                     ])
                     ->action(function ($data, Badges $badge, BadgeBoard $post){
-
+                        //action to give a user/s a badge
                         $assignList = $data['Assign'] ?? [];
                         $idAssigned = collect($assignList)->pluck('givenTo');
                         $count = $idAssigned->count();

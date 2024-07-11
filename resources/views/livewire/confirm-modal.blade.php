@@ -1,4 +1,4 @@
-<div class="z-80 justify-center items-center w-full inset-0 h-auto max-h-full w-auto">
+<div class="z-80 justify-center items-center inset-0 h-auto max-h-full w-auto">
     <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg dark:bg-gray-700">

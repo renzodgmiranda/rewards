@@ -144,8 +144,9 @@ class RedeemHistoryResource extends Resource
                             'Unclaimed' => 'Unclaimed',
                         ])
                 ])
-                ->action(fn(RedeemHistory $record, $data) => $record->changeStatus($data, $record)),
+                ->action(fn(RedeemHistory $record, $data) => $record->changeStatus($data, $record)), //changeStatus function in model
 
+                //undo action
                 Action::make('Undo')
                     ->button()
                     ->requiresConfirmation()
@@ -158,7 +159,6 @@ class RedeemHistoryResource extends Resource
                         return true;
                     })
                     ->action(function(RedeemHistory $status){
-
                         $item = Rewards::where('rewards_name', '=', $status->redeemed_name)->where('id', $status->rewards_id)->first();
                         $pts = $status->redeemed_points;
                         $user = User::where('name', '=', $status->redeemed_by)->where('id', $status->user_id)->first();
