@@ -29,8 +29,11 @@ class AddPoints extends Page implements HasForms
 
     protected static string $view = 'filament.resources.user-resource.pages.add-points';
 
+    //Z:\rewards\resources\views\filament\resources\user-resource\pages\add-points.blade.php
+
     public $record;
 
+    //initialization of custom page form and restriction if the user is not Admin or opening
     public function mount(): void
     {
         $user = auth()->user();
@@ -173,7 +176,7 @@ class AddPoints extends Page implements HasForms
 
 
 
-
+    //update total when repeater field gets additional items
     public static function updateTotal(Get $get, Set $set){
 
         $criteria = [
@@ -225,7 +228,7 @@ class AddPoints extends Page implements HasForms
     }
 
 
-
+    //submit functionality
     public function submit(User $record){
 
         $user = auth()->user();
@@ -262,6 +265,7 @@ class AddPoints extends Page implements HasForms
             ->iconColor('success')
             ->send();
 
+        //match string from dropdowns with the corresponding points
         for ($i = 0; $count > $i ; $i++){
             $text = $selectedcriteria->get($i);
 
@@ -278,6 +282,7 @@ class AddPoints extends Page implements HasForms
             }
         }
 
+        //start of Point History recording
                     $q1 = 0;
                     $q2 = 0;
                     $q3 = 0;
@@ -347,6 +352,7 @@ class AddPoints extends Page implements HasForms
 
     }
 
+    //function to grab all reference arrays and turn it into a hashmap
     private function getPointsForCriteria($criteria)
     {
         $allCriteria = array_merge(

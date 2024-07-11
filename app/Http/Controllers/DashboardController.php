@@ -24,6 +24,7 @@ class DashboardController extends Controller
         $badgeCount = Badgeboard::where('badge_owner', $authId)->count();
         $posts = Post::where('post_users', 'like', '%'. $authId .'%')->latest()->get();
 
+        //querying for Dashboard Page
         return view('dashboard', [
             'availableRewards' => Rewards::inRandomOrder()->limit(4)->whereNot('rewards_quantity', 0)->get(),
             'claimedRewards' => RedeemHistory::take(4)->where('redeemed_status', 'Redeemed')->where('redeemed_by', auth()->user()->name)->get(),

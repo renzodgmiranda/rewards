@@ -20,8 +20,8 @@
                     'bg-gray-200 text-gray-500 text-pts25 hover:text-gray-900 hover:bg-gold hover:w-full hover:text-pts30woRem transition-all'}}
                     py-8 font-sans font-semibold w-11/12 rounded-lg shadow-xl"
                     wire:click="setSort('3')">Gold</button>
-                <button class="{{$this->isPlatinum() === True ? 'text-gray-900 border-b border-gray-700 bg-gray-700 w-full text-pts30woRem text-white' :
-                    'bg-gray-200 text-gray-500 text-pts25 hover:text-gray-900 hover:bg-gray-700 hover:w-full hover:text-pts30woRem hover:text-white transition-all'}}
+                <button class="{{$this->isPlatinum() === True ? 'text-gray-900 border-b border-gray-700 bg-gray-700 w-full text-pts30woRem dark:text-white' :
+                    'bg-gray-200 text-gray-500 text-pts25 hover:text-gray-900 hover:bg-gray-700 hover:w-full hover:text-pts30woRem dark:hover:text-white transition-all'}}
                     py-8 font-sans font-semibold w-11/12 rounded-lg shadow-xl"
                     wire:click="setSort('4')">Platinum</button>
             </div>

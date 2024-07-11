@@ -32,6 +32,7 @@ class ConfirmModal extends ModalComponent
         }
     }
 
+    //saving the inputs and creating a redeem history record
     public function save()
     {
         $this->data = ['quantity' => $this->quantity, 'note' => $this->note];
@@ -46,6 +47,7 @@ class ConfirmModal extends ModalComponent
         return view('livewire.confirm-modal');
     }
 
+    //redeem function same in rewards model
     public function redeem($reward, $data){
 
         $user = Auth::user();

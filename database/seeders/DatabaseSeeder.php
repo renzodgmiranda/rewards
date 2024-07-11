@@ -57,6 +57,8 @@ class DatabaseSeeder extends Seeder
 
         $badgePolicy = Permission::create(['name' => 'badgePolicy', 'description' => 'Allow users to acess all of Badge Resource']);
 
+        $postPolicy = Permission::create(['name' => 'postPolicy', 'description' => 'Allow users to acess all of Post Resource']);
+
 
 
         $adminRole->givePermissionTo($userView);
@@ -83,6 +85,7 @@ class DatabaseSeeder extends Seeder
         $adminRole->givePermissionTo($voucherEdit);
         $adminRole->givePermissionTo($voucherDelete);
         $adminRole->givePermissionTo($badgePolicy);
+        $adminRole->givePermissionTo($postPolicy);
 
         $employeeRole->givePermissionTo($rewardsView);
         $employeeRole->givePermissionTo($redeemHistoryView);

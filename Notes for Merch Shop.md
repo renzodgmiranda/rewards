@@ -42,3 +42,6 @@ Livewire:
 Redeem History 
 Redeem Voucher
 Inbox
+
+Plugin List:
+QR by Larazeus

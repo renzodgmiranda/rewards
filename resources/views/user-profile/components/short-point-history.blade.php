@@ -1,8 +1,9 @@
 @php
     $selectedQuarter = request('quarter', '');
-    $sortedLogData = collect($pointLog->log_content)->reverse()->sortBy('Quarter');
+    $sortedLogData = collect($pointLog->log_content)->reverse()->sortBy('Quarter'); //populate collection with contents of json
     $quarters = $sortedLogData->pluck('Quarter')->unique()->sort()->values();
 
+    //if there is selected quarter, only return the selected quarter; else
     if ($selectedQuarter) {
         $filteredData = $sortedLogData->where('Quarter', $selectedQuarter);
     } else {
@@ -87,7 +88,10 @@
     </div>
 </div>
 
+
 <script>
+    //script for auto scrolling into the Point History portion of User Profile
+
     function submitFormWithScroll() {
         document.getElementById('scrollPosition').value = window.pageYOffset;
         document.getElementById('quarter-filter-form').submit();

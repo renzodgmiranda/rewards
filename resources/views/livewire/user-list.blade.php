@@ -5,6 +5,7 @@
         @endforeach
     </div>
     <div class="my-3">
+    <!-- Paganation Buttons-->
         {{$this->userList->onEachSide(1)->links()}}
     </div>
 </div>

@@ -17,7 +17,7 @@
         </div>
         <div class="m-2 rounded-lg border-gray-300 border">
             @foreach ($wishlist as $item)
-            <div class="w-full p-1 border-b border-gray-300 p-2 text-regular font-semibold font-sans">
+            <div class="w-full p-1 border-b border-gray-300 text-regular font-semibold font-sans">
                 {{$item->rewards_name}}
             </div>
             @endforeach

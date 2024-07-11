@@ -113,4 +113,24 @@ class Rewards extends Model
 
 
     }
+
+    public function addToWishlist($rewards){
+        $user = auth()->user();
+        $rewardId = $this->rewards->id;
+
+        $wishlist = json_decode($user->wishlist, true) ?: [];
+
+
+
+        if(\in_array($rewardId, $wishlist)){
+            $this->hidden = '';
+        }
+        else{
+            $wishlist[] = $rewardId;
+            $user->wishlist = json_encode($wishlist);
+            $user->save();
+
+            return $this->afterAction();
+        }
+    }
 }
